@@ -1515,8 +1515,11 @@ void PandarGeneral_Internal::CalcPointXYZIT(Pandar40PPacket *pkt, int blockid,
     if(azimuth >= 36000)
       azimuth -= 36000;
     float xyDistance = unit.distance * m_cos_elevation_map_[i];
-    point.x = static_cast<float>(xyDistance * m_sin_azimuth_map_[azimuth]);
-    point.y = static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
+    // point.x = static_cast<float>(xyDistance * m_sin_azimuth_map_[azimuth]);
+    // point.y = static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
+    std::cout << "!!" << std::endl;
+    // point.y = static_cast<float>(xyDistance * m_sin_azimuth_map_[azimuth]);
+    // point.x = - static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
     point.z = static_cast<float>(unit.distance * m_sin_elevation_map_[i]);
     transformPoint(point.x, point.y, point.z);  
 
