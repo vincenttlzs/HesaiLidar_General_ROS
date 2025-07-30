@@ -1517,7 +1517,7 @@ void PandarGeneral_Internal::CalcPointXYZIT(Pandar40PPacket *pkt, int blockid,
     float xyDistance = unit.distance * m_cos_elevation_map_[i];
     // point.x = static_cast<float>(xyDistance * m_sin_azimuth_map_[azimuth]);
     // point.y = static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
-    std::cout << "!!" << std::endl;
+    // std::cout << "!!" << std::endl;
     // point.y = static_cast<float>(xyDistance * m_sin_azimuth_map_[azimuth]);
     // point.x = - static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
     point.z = static_cast<float>(unit.distance * m_sin_elevation_map_[i]);
@@ -1578,6 +1578,11 @@ void PandarGeneral_Internal::CalcL64PointXYZIT(HS_LIDAR_L64_Packet *pkt, int blo
     point.y = static_cast<float>(xyDistance * m_cos_azimuth_map_[azimuth]);
     point.z = static_cast<float>(unit.distance * m_sin_elevation_map_[i]);
     transformPoint(point.x, point.y, point.z);  
+
+    const float tan60 = 1.73205080757f; // tan(60°)≈√3≈1.732
+    if (point.z < 0 && sqrt(point.x*point.x + point.y*point.y) / (-point.z) < tan60)){
+        continue;
+    }
 
     point.intensity = unit.intensity;
 
